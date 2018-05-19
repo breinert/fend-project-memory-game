@@ -1,8 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
-const cardDeck = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb', 'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb'];
-
+const deck = document.querySelector('.deck');
+const card = document.getElementsByClassName('card');
+const cards = [...card];
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -11,19 +12,14 @@ const cardDeck = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa
  */
 function displayCards() {
     //Shuffle the cards
-    shuffle(cardDeck);
-    //Make element
-    const cardList = document.getElementsByClassName('deck')[0];
-    while (cardList.hasChildNodes()) {
-        cardList.removeChild(cardList.firstChild);
+    let shuffleCards = shuffle(cards);
+    //Clear the current cards
+    while (deck.hasChildNodes()) {
+        deck.removeChild(deck.firstChild);
     }
-    //Create all cards
-    for (let i of cardDeck) {
-        let listItem = document.createElement('li');
-        listItem.classList.add('card');
-        let listIcon = document.createElement('i');
-        listIcon.classList.add(cardDeck[i]);
-        cardList.appendChild(listItem).appendChild(listIcon);
+    //Create new deck
+    for (let shuffleCard of shuffleCards) {
+        deck.appendChild(shuffleCard);
     }
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
