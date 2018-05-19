@@ -18,11 +18,11 @@ function displayCards() {
         cardList.removeChild(cardList.firstChild);
     }
     //Create all cards
-    for (const i of cardDeck) {
+    for (let i of cardDeck) {
         let listItem = document.createElement('li');
         listItem.classList.add('card');
         let listIcon = document.createElement('i');
-        listIcon.classList.add(cardList[i]);
+        listIcon.classList.add(cardDeck[i]);
         cardList.appendChild(listItem).appendChild(listIcon);
     }
 }
