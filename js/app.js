@@ -4,15 +4,19 @@
 const deck = document.querySelector('.deck');
 const card = document.getElementsByClassName('card');
 const cards = [...card];
+const moves = 0;
+const openedCards = [];
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-function displayCards() {
+function restart() {
     //Shuffle the cards
     let shuffleCards = shuffle(cards);
+
     //Clear the current cards
     while (deck.hasChildNodes()) {
         deck.removeChild(deck.firstChild);
@@ -48,4 +52,14 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-document.getElementsByClassName('restart')[0].addEventListener('click', displayCards);
+document.getElementsByClassName('restart')[0].addEventListener('click', restart);
+const currentCard = document.getElementsByClassName('card');
+const currentCards = [...currentCard];
+currentCards.forEach(function(card) {
+    card.addEventListener('click', function(evt) {
+        evt.target.classList.toggle('open');
+        evt.target.classList.toggle('show');
+        evt.target.classList.toggle('disabled');
+        console.log('clicked');
+    });
+})
