@@ -7,17 +7,15 @@ const cards = [...card];
 let moves = 0;
 let openedCards = [];
 let moveCounter = document.querySelector('.moves');
+let stars = document.querySelector('.stars').querySelectorAll('i');
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-function restart() {
+function initGame() {
     //Reset moves
     moves = 0;
     moveCounter.innerText = moves;
+    stars.forEach(function(star) {
+        star.style.fontSize = 'medium';
+    });
     //Make sure cards are face-down
     cards.forEach(function(card) {
         card.classList.remove('open', 'show', 'match');
@@ -50,17 +48,7 @@ function shuffle(array) {
 }
 
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-document.getElementsByClassName('restart')[0].addEventListener('click', restart);
+document.getElementsByClassName('restart')[0].addEventListener('click', initGame);
 const currentCard = document.getElementsByClassName('card');
 const currentCards = [...currentCard];
 currentCards.forEach(function(card) {
@@ -84,7 +72,12 @@ currentCards.forEach(function(card) {
                 }
                 moves += 1;
                 moveCounter.innerText = moves;
-
+                if (moves % 15 == 0) {
+                    stars[0].style.fontSize = '0';
+                }
+                if (moves % 24 == 0) {
+                    stars[1].style.fontSize = '0';
+                }
             }
         }
 
