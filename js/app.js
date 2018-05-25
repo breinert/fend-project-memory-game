@@ -6,6 +6,7 @@ const card = document.getElementsByClassName('card');
 const cards = [...card];
 let moves = 0;
 let openedCards = [];
+let moveCounter = document.querySelector('.moves');
 
 /*
  * Display the cards on the page
@@ -14,6 +15,9 @@ let openedCards = [];
  *   - add each card's HTML to the page
  */
 function restart() {
+    //Reset moves
+    moves = 0;
+    moveCounter.innerText = moves;
     //Make sure cards are face-down
     cards.forEach(function(card) {
         card.classList.remove('open', 'show', 'match');
@@ -79,6 +83,8 @@ currentCards.forEach(function(card) {
                     },700);
                 }
                 moves += 1;
+                moveCounter.innerText = moves;
+
             }
         }
 
