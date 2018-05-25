@@ -4,8 +4,8 @@
 const deck = document.querySelector('.deck');
 const card = document.getElementsByClassName('card');
 const cards = [...card];
-const moves = 0;
-const openedCards = [];
+let moves = 0;
+let openedCards = [];
 
 /*
  * Display the cards on the page
@@ -14,6 +14,10 @@ const openedCards = [];
  *   - add each card's HTML to the page
  */
 function restart() {
+    //Make sure cards are face-down
+    cards.forEach(function(card) {
+        card.classList.remove('open', 'show', 'match');
+    });
     //Shuffle the cards
     let shuffleCards = shuffle(cards);
 
@@ -57,9 +61,26 @@ const currentCard = document.getElementsByClassName('card');
 const currentCards = [...currentCard];
 currentCards.forEach(function(card) {
     card.addEventListener('click', function(evt) {
-        evt.target.classList.toggle('open');
-        evt.target.classList.toggle('show');
-        evt.target.classList.toggle('disabled');
-        console.log('clicked');
+        if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
+            openedCards.push(card);
+            card.classList.add('open', 'show');
+            if (openedCards.length == 2) {
+                if (openedCards[0].querySelector('i').classList.item(1) == openedCards[1].querySelector('i').classList.item(1)) {
+                    openedCards[0].classList.add('match');
+                    openedCards[1].classList.add('match');
+                    openedCards = [];
+                } else {
+                    //If no match, flip cards
+                    setTimeout(function() {
+                        openedCards.forEach(function(card) {
+                            card.classList.remove('open', 'show');
+                        });
+                        openedCards = [];
+                    },700);
+                }
+                moves += 1;
+            }
+        }
+
     });
-})
+});
