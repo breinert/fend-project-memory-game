@@ -8,10 +8,18 @@ let moves = 0;
 let openedCards = [];
 let moveCounter = document.querySelector('.moves');
 let stars = document.querySelector('.stars').querySelectorAll('i');
+let start;
+let elapsed = 0;
+const min = document.querySelector('.min');
+const sec = document.querySelector('.sec');
+
+window.onload = initGame();
 
 function initGame() {
-    //Reset moves
+    //Reset variables
+    seconds = 0;
     moves = 0;
+
     moveCounter.innerText = moves;
     stars.forEach(function(star) {
         star.style.fontSize = 'medium';
@@ -31,6 +39,8 @@ function initGame() {
     for (let shuffleCard of shuffleCards) {
         deck.appendChild(shuffleCard);
     }
+    sec.innerHTML=0;
+    min.innerHTML=0;
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -47,12 +57,24 @@ function shuffle(array) {
     return array;
 }
 
+let timer = setInterval(function() {
+
+    let time = new Date().getTime() - start;
+    elapsed = Math.floor(time / 100) / 10;
+    sec.innerHTML = (parseInt(elapsed%60));
+    min.innerHTML = (parseInt(elapsed/60));
+}, 100);
 
 document.getElementsByClassName('restart')[0].addEventListener('click', initGame);
 const currentCard = document.getElementsByClassName('card');
 const currentCards = [...currentCard];
+
 currentCards.forEach(function(card) {
     card.addEventListener('click', function(evt) {
+        if (moves == 0) {
+            start = new Date().getTime();
+            timer;
+        }
         if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
             openedCards.push(card);
             card.classList.add('open', 'show');
@@ -72,10 +94,10 @@ currentCards.forEach(function(card) {
                 }
                 moves += 1;
                 moveCounter.innerText = moves;
-                if (moves % 15 == 0) {
+                if (moves % 14 == 0) {
                     stars[0].style.fontSize = '0';
                 }
-                if (moves % 24 == 0) {
+                if (moves % 22 == 0) {
                     stars[1].style.fontSize = '0';
                 }
             }
