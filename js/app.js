@@ -1,6 +1,4 @@
-/*
- * Create a list that holds all of your cards
- */
+//Declare variables
 const deck = document.querySelector('.deck');
 const card = document.getElementsByClassName('card');
 const cards = [...card];
@@ -9,13 +7,13 @@ let score;
 let time;
 let timer;
 let start;
+let elapsed;
 let initialClick = false;
 let openedCards = [];
 let matched;
-let moveCounter = document.querySelector('.moves');
-let stars = document.querySelector('.stars').querySelectorAll('i');
-let myModal = document.getElementById('modal');
-let elapsed;
+const moveCounter = document.querySelector('.moves');
+const stars = document.querySelector('.stars').querySelectorAll('i');
+const myModal = document.getElementById('modal');
 const min = document.querySelector('.min');
 const sec = document.querySelector('.sec');
 const endScore = document.querySelector('.score');
@@ -23,6 +21,7 @@ const endMoves = document.querySelector('.move');
 const mins = document.querySelector('.mins');
 const secs = document.querySelector('.secs');
 
+//Game strat/reset
 function initGame() {
     //Reset variables
     moves = 0;
@@ -47,6 +46,7 @@ function initGame() {
     for (let shuffleCard of shuffleCards) {
         deck.appendChild(shuffleCard);
     }
+    //Reset the timer
     sec.innerHTML = 0;
     min.innerHTML = 0;
     clearTimer();
@@ -106,15 +106,18 @@ function openModal() {
     document.getElementsByClassName('play-again')[0].addEventListener('click', initGame);
     document.getElementsByClassName('quit')[0].addEventListener('click', clearModal);
 }
+
 function clearModal() {
     myModal.style.display = 'none';
 }
+
 document.getElementsByClassName('restart')[0].addEventListener('click', initGame);
 const currentCard = document.getElementsByClassName('card');
 const currentCards = [...currentCard];
 
 window.onload = initGame;
 
+//Card flip and match
 currentCards.forEach(function(card) {
     card.addEventListener('click', function(evt) {
         if (initialClick == false) {
@@ -136,7 +139,7 @@ currentCards.forEach(function(card) {
                         openModal();
                     }
                 } else {
-                    //If no match, flip cards
+                    //If no match, flip cards back over
                     setTimeout(function() {
                         openedCards.forEach(function(card) {
                             card.classList.remove('open', 'show');
