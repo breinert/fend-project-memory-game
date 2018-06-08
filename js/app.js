@@ -4,15 +4,18 @@
 const deck = document.querySelector('.deck');
 const card = document.getElementsByClassName('card');
 const cards = [...card];
-let moves = 0;
-let score = 3;
+let moves;
+let score;
+let time;
+let timer;
+let start;
+let initialClick = false;
 let openedCards = [];
-let matched = 0;
+let matched;
 let moveCounter = document.querySelector('.moves');
 let stars = document.querySelector('.stars').querySelectorAll('i');
 let myModal = document.getElementById('modal');
-let start;
-let elapsed = 0;
+let elapsed;
 const min = document.querySelector('.min');
 const sec = document.querySelector('.sec');
 const endScore = document.querySelector('.score');
@@ -22,10 +25,9 @@ const secs = document.querySelector('.secs');
 
 function initGame() {
     //Reset variables
-    seconds = 0;
     moves = 0;
     score = 3;
-
+    matched = 0;
     moveCounter.innerText = moves;
     stars.forEach(function(star) {
         star.style.fontSize = 'medium';
@@ -45,10 +47,11 @@ function initGame() {
     for (let shuffleCard of shuffleCards) {
         deck.appendChild(shuffleCard);
     }
-    sec.innerHTML = '0';
-    min.innerHTML = '0';
-
-    myModal.style.display = 'none';
+    sec.innerHTML = 0;
+    min.innerHTML = 0;
+    clearTimer();
+    initialClick = false;
+    clearModal();
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -65,15 +68,32 @@ function shuffle(array) {
     return array;
 }
 
-//Timer function
-let timer = setInterval(function() {
-    let time = new Date().getTime() - start;
-    elapsed = Math.floor(time / 100) / 10;
-    sec.innerHTML = (parseInt(elapsed%60));
-    min.innerHTML = (parseInt(elapsed/60));
-}, 100);
+function setTimer() {
+    timer = setInterval(function() {
+        time = new Date().getTime() - start;
+        elapsed = Math.floor(time / 100) / 10;
+        sec.innerHTML = (parseInt(elapsed%60));
+        min.innerHTML = (parseInt(elapsed/60));
+    }, 100);
+}
 
-//Game over, display modal
+function clearTimer() {
+    clearInterval(timer);
+}
+
+function moveCount() {
+    moves += 1;
+    moveCounter.innerText = moves;
+    if (moves == 14) {
+        stars[0].style.fontSize = '0';
+        score = 2;
+    }
+    if (moves == 22) {
+        stars[1].style.fontSize = '0';
+        score = 1;
+    }
+}
+
 function openModal() {
     const endMin = document.querySelector('.min').innerHTML;
     const endSec = document.querySelector('.sec').innerHTML;
@@ -82,26 +102,31 @@ function openModal() {
     secs.innerHTML = endSec;
     endMoves.innerHTML = moves;
     myModal.style.display = 'block';
-    clearInterval(timer);
-
+    clearTimer();
+    document.getElementsByClassName('play-again')[0].addEventListener('click', initGame);
+    document.getElementsByClassName('quit')[0].addEventListener('click', clearModal);
 }
-
+function clearModal() {
+    myModal.style.display = 'none';
+}
 document.getElementsByClassName('restart')[0].addEventListener('click', initGame);
 const currentCard = document.getElementsByClassName('card');
 const currentCards = [...currentCard];
 
-window.onload = initGame();
+window.onload = initGame;
 
 currentCards.forEach(function(card) {
     card.addEventListener('click', function(evt) {
-        if (moves == 0) {
+        if (initialClick == false) {
             start = new Date().getTime();
-            timer;
+            setTimer();
+            initialClick = true;
         }
         if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
             openedCards.push(card);
             card.classList.add('open', 'show');
             if (openedCards.length == 2) {
+                moveCount();
                 if (openedCards[0].querySelector('i').classList.item(1) == openedCards[1].querySelector('i').classList.item(1)) {
                     openedCards[0].classList.add('match');
                     openedCards[1].classList.add('match');
@@ -118,16 +143,6 @@ currentCards.forEach(function(card) {
                         });
                         openedCards = [];
                     },700);
-                }
-                moves += 1;
-                moveCounter.innerText = moves;
-                if (moves == 14) {
-                    stars[0].style.fontSize = '0';
-                    score = 2;
-                }
-                if (moves == 22) {
-                    stars[1].style.fontSize = '0';
-                    score = 1;
                 }
             }
         }
