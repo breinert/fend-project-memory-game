@@ -18,11 +18,11 @@ This project requires Google Fonts and Font Awesome.
 
 ## Know-Bugs
 
-The player may reveal a third card if clicked rapidly after the second car, and before the cards flip back over again.
+None.
 
 ## To-Do
 
-Additional styling will be added in a future revision. The known bugs will be addressed.
+Additional styling will be added in a future revision.
 
 ## Contributing
 

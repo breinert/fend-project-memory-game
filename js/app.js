@@ -28,6 +28,7 @@ function initGame() {
     score = 3;
     matched = 0;
     moveCounter.innerText = moves;
+    openedCards = [];
     stars.forEach(function(star) {
         star.style.fontSize = 'medium';
     });
@@ -120,6 +121,9 @@ window.onload = initGame;
 //Card flip and match
 currentCards.forEach(function(card) {
     card.addEventListener('click', function(evt) {
+        if (openedCards.length == 2) {
+            card.removeEventListener('click');
+        }
         if (initialClick == false) {
             start = new Date().getTime();
             setTimer();
