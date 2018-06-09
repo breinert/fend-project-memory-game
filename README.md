@@ -2,19 +2,23 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+* [How to Play](#How to Play)
+* [Known Bugs](#Known Bugs)
+* [To Do](#To Do)
+* [Contributing](#Contributing)
 
-## Instructions
+## How to Play
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+On window load the cards are shuffled and the game is ready to play. Players should left-click on a card revealing the hidden symbol. The player then clicks another card trying to find the match to the first card. If the cards do not match, the cards are flipped back over after 0.7 seconds. When all of the cards are matched a congratulation modal is presented and the player has the option to start a new game or stop playing. On the modal is displayed the score, the number of moves (two card flips is one move), and the length of time taken to finish the game. The player may also restart the game during play by clicking on the rest button to the right of the score.
 
-To get started, open `js/app.js` and start building out the app's functionality
+## Know Bugs
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+The player may reveal a third card if clicked rapidly after the second car, and before the cards flip back over again.
+
+## To Do
+
+Additional styling will be added in a future revision. The known bugs will be addressed.
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+This code was based on starter code provided by Udacity and is found [here](https://github.com/udacity/fend-project-memory-game). The rest of the code was written by Brian Reinert with help from the mentors and fellow students at Udacity.
